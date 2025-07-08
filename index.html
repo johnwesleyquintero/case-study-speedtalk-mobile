@@ -6,6 +6,8 @@
     <title>Strategic Analysis: SpeedTalk Mobile</title>
     <!-- Inline SVG Favicon for VAXPH -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3C!-- A simple 'V' design for VAXPH --%3E%3Crect width='100' height='100' fill='%23F97316'/%3E%3Cpolygon points='10 10 50 90 90 10 80 10 50 70 20 10' fill='white'/%3E%3C/svg%3E">
+    <!-- Lucide Icons Script -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
             /* --- BRAND COLORS TARGETED --- */
@@ -18,6 +20,9 @@
             --bg-color: #F9FAFB;
             --card-bg: #FFFFFF;
             --border-color: #E5E7EB;
+            /* --- CONTEXTUAL COLORS FOR ICONS --- */
+            --warning-color: #D97706; /* A strong amber/yellow for warnings */
+            --opportunity-color: #059669; /* A green for opportunities */
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -41,7 +46,7 @@
         }
         header h1 { color: var(--secondary-color); font-size: 2.5em; margin: 0; }
         header p { color: #6B7280; font-size: 1.1em; margin-top: 5px; }
-                 .print-button {
+        .print-button {
             position: absolute; top: 0; right: 0; cursor: pointer; background: none;
             border: 1px solid var(--border-color); border-radius: 5px; padding: 8px 12px;
             display: flex; align-items: center; gap: 8px; color: var(--text-color);
@@ -49,7 +54,6 @@
         }
         .print-button:hover { background-color: #f0f0f0; }
         .print-button svg { width: 18px; height: 18px; }
-                 /* --- NEW INTRO SECTION STYLES --- */
         .intro-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -78,16 +82,15 @@
             transition: transform 0.2s;
         }
         .amazon-button:hover { transform: scale(1.03); }
-        /* --- END NEW INTRO SECTION STYLES --- */
-                 .executive-summary {
-            background-color: var(--light-primary-bg); /* Updated to use variable */
+        .executive-summary {
+            background-color: var(--light-primary-bg);
             border-left: 5px solid var(--primary-color);
             padding: 20px;
             border-radius: 5px;
             height: 100%; /* Ensures it fills grid cell */
         }
         .executive-summary h2 { color: var(--secondary-color); margin-top: 0; }
-                 .card {
+        .card {
             background-color: var(--card-bg); border: 1px solid var(--border-color);
             border-radius: 8px; padding: 25px; margin-bottom: 30px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
@@ -99,34 +102,57 @@
         }
         h3 { color: var(--secondary-color); font-size: 1.4em; }
         ul { list-style-type: none; padding-left: 0; }
-        li { position: relative; padding-left: 25px; margin-bottom: 10px; }
-        li::before { content: '✓'; position: absolute; left: 0; color: var(--primary-color); font-weight: bold; }
-        .threat li::before { content: '⚠️'; }
-        .opportunity li::before { content: '🚀'; }
+
+        /* --- List Styles (Refactored for Lucide Icons) --- */
+        li {
+            display: flex;
+            align-items: flex-start; /* Align icon to the top of the text */
+            gap: 12px; /* Space between icon and text */
+            margin-bottom: 12px;
+        }
+        /* Style the Lucide icon SVG */
+        li .lucide {
+            flex-shrink: 0; /* Prevent icon from shrinking */
+            width: 20px;
+            height: 20px;
+            margin-top: 3px; /* Fine-tune vertical alignment */
+            color: var(--primary-color); /* Default color (for checkmarks) */
+        }
+        .threat li .lucide {
+            color: var(--warning-color);
+        }
+        .opportunity li .lucide {
+            color: var(--opportunity-color);
+        }
+
         .review-quote { border-left: 3px solid #FCA5A5; padding-left: 15px; font-style: italic; color: #4B5563; margin: 15px 0; }
         details { margin-top: 15px; border: 1px solid var(--border-color); border-radius: 5px; padding: 10px; }
         summary { cursor: pointer; font-weight: bold; color: var(--primary-color); }
         footer { text-align: center; margin-top: 50px; color: #9CA3AF; font-size: 0.9em; }
-                 .tag {
-            display: inline-block; background-color: var(--light-primary-bg); /* Updated to use variable */
-            color: var(--light-primary-text); /* Updated to use variable */
+        .tag {
+            display: inline-block; background-color: var(--light-primary-bg);
+            color: var(--light-primary-text);
             padding: 3px 10px;
             border-radius: 15px; font-size: 0.85em; font-weight: 500;
         }
-                 @media screen and (max-width: 768px) {
+        @media screen and (max-width: 768px) {
             .intro-grid {
                 grid-template-columns: 1fr;
             }
         }
-                 @media print {
+        @media print {
             body { background-color: #FFFFFF; font-size: 10pt; }
             .container { margin: 0; padding: 0; max-width: 100%; }
-            .print-button, details summary, .amazon-button { display: none; } /* Added .amazon-button */
-            .card, .executive-summary, .intro-grid { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; } /* Added .intro-grid */
+            .print-button, details summary, .amazon-button { display: none; }
+            .card, .executive-summary, .intro-grid { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
             header { border-bottom: 2px solid #000; }
             h1, h2, h3 { color: #000; }
             a { text-decoration: none; color: #000; }
             .tag { border: 1px solid #ccc; background-color: #fff; color: #000; }
+            /* Ensure Lucide icons print in black */
+            li .lucide {
+                color: #000 !important;
+            }
         }
     </style>
 </head>
@@ -134,7 +160,7 @@
     <div class="container">
         <header>
             <button class="print-button" onclick="window.print()">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a8.25 8.25 0 018.25-8.25H21M7.5 21H3.75A1.75 1.75 0 012 19.25V8.75A1.75 1.75 0 013.75 7H18a2.25 2.25 0 012.25 2.25v.193m-16.5 5.813c.24.03.48.062.72.096C5.065 15.245 5.754 15 6.5 15c.828 0 1.5.286 2.25.75 1.125.722 2.25.722 3.375 0s2.25-.722 3.375 0c.75.464 1.425.75 2.25.75.828 0 1.5-.286 2.25-.75 1.125-.722 2.25-.722 3.375 0s2.25.722 3.375 0M12 18.75a.75.75 0 100-1.5.75.75 0 000 1.5z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a8.25 8.25 0 018.25-8.25H21M7.5 21H3.75A1.75 1.75 0 012 19.25V8.75A1.75 1.75 0 013.75 7H18a2.25 2.25 0 012.25 2.25v.193m-16.5 5.813c.24.03.48.062-.72.096C5.065 15.245 5.754 15 6.5 15c.828 0 1.5.286 2.25.75 1.125.722 2.25.722 3.375 0s2.25-.722 3.375 0c.75.464 1.425.75 2.25.75.828 0 1.5-.286 2.25-.75 1.125-.722 2.25-.722 3.375 0s2.25.722 3.375 0M12 18.75a.75.75 0 100-1.5.75.75 0 000 1.5z" /></svg>
                 Print / Save as PDF
             </button>
             <h1>Strategic Analysis & Growth Plan</h1>
@@ -142,7 +168,7 @@
             <p>Prepared by: John Wesley Quintero</p>
             <p>Brand Focus: <strong>SpeedTalk Mobile</strong></p>
         </header>
-                 <!-- NEW INTRO SECTION -->
+
         <div class="intro-grid">
             <div class="executive-summary">
                 <h2>Executive Summary</h2>
@@ -153,52 +179,59 @@
                 <a href="https://a.co/d/776BcV1" target="_blank" class="amazon-button">View Live Amazon Listing</a>
             </div>
         </div>
-        <!-- END NEW INTRO SECTION -->
-                 <section class="card">
+
+        <section class="card">
             <h2>Methodology</h2>
             <p>This analysis was conducted using resourceful market research techniques, combining data from free-tier SaaS tools, manual "guerrilla" research via Amazon's search interface, and in-depth sentiment analysis of over 50 customer reviews. This multi-faceted approach provides a comprehensive view of technical performance, market positioning, and direct customer feedback.</p>
         </section>
-                 <section class="card">
+
+        <section class="card">
             <h2>Key Finding #1: Critical Threats on the Amazon Marketplace</h2>
             <h3>Brand Erosion & Inefficient Ad Spend</h3>
             <ul class="threat">
-                <li><strong>Buy Box Hijacking & Revenue Leakage:</strong> Analysis shows SpeedTalk consistently loses ~10% of the Buy Box to unauthorized 3rd-party resellers, representing a direct revenue leak and allowing competitors to profit from SpeedTalk's ad spend.</li>
-                <li><strong>Severe Trust Deficit from Customer Reviews:</strong> A recurring theme of "scam," "stolen credit card," and "forced auto-pay" in customer reviews is severely damaging brand reputation and suppressing conversion rates on the product detail page.</li>
-                <li><strong>Brand Damage from Resellers:</strong> These hijackers often deliver a poor customer experience (wrong items, activation issues), leading to negative reviews on SpeedTalk's own listings and poisoning the brand's image.</li>
+                <li><i data-lucide="shield-alert"></i><span><strong>Buy Box Hijacking & Revenue Leakage:</strong> Analysis shows SpeedTalk consistently loses ~10% of the Buy Box to unauthorized 3rd-party resellers, representing a direct revenue leak and allowing competitors to profit from SpeedTalk's ad spend.</span></li>
+                <li><i data-lucide="shield-alert"></i><span><strong>Severe Trust Deficit from Customer Reviews:</strong> A recurring theme of "scam," "stolen credit card," and "forced auto-pay" in customer reviews is severely damaging brand reputation and suppressing conversion rates on the product detail page.</span></li>
+                <li><i data-lucide="shield-alert"></i><span><strong>Brand Damage from Resellers:</strong> These hijackers often deliver a poor customer experience (wrong items, activation issues), leading to negative reviews on SpeedTalk's own listings and poisoning the brand's image.</span></li>
             </ul>
         </section>
-                 <section class="card">
+
+        <section class="card">
             <h2>Key Finding #2: Strategic Opportunity Analysis</h2>
             <h3>Untapped Markets & Keyword Gaps</h3>
             <ul class="opportunity">
-                <li><strong>The "Connected Camera" Market:</strong> Discovered a completely untapped market segment with over <strong>2,100 monthly searches</strong> for <span class="tag">sim card for camera</span>. SpeedTalk is not currently targeting this high-intent audience.</li>
-                <li><strong>The Spanish-Speaking Market:</strong> Identified over <strong>5,600 monthly searches</strong> for <span class="tag">rastreador gps para carros</span>. This represents a massive, underserved market with likely lower ad competition.</li>
-                <li><strong>Hyper-Targeted Personas:</strong> Sentiment analysis reveals the primary "winning" persona is a **parent buying for a child's smartwatch or starter phone**. Current marketing is too generic and fails to speak directly to this core audience's needs for safety and peace of mind.</li>
+                <li><i data-lucide="lightbulb"></i><span><strong>The "Connected Camera" Market:</strong> Discovered a completely untapped market segment with over <strong>2,100 monthly searches</strong> for <span class="tag">sim card for camera</span>. SpeedTalk is not currently targeting this high-intent audience.</span></li>
+                <li><i data-lucide="lightbulb"></i><span><strong>The Spanish-Speaking Market:</strong> Identified over <strong>5,600 monthly searches</strong> for <span class="tag">rastreador gps para carros</span>. This represents a massive, underserved market with likely lower ad competition.</span></li>
+                <li><i data-lucide="lightbulb"></i><span><strong>Hyper-Targeted Personas:</strong> Sentiment analysis reveals the primary "winning" persona is a **parent buying for a child's smartwatch or starter phone**. Current marketing is too generic and fails to speak directly to this core audience's needs for safety and peace of mind.</span></li>
             </ul>
         </section>
-                 <section class="card">
+
+        <section class="card">
             <h2>Strategic Recommendations: An Amazon-Centric Growth Plan</h2>
             <h3>Phase 1: Brand Protection & Trust Rebuilding (Days 1-30)</h3>
             <ul>
-                <li>Implement a proactive **Brand Protection Protocol** to aggressively remove unauthorized resellers, immediately plugging the revenue leak and protecting ad spend.</li>
-                <li>Conduct a **"Trust Overhaul"** on the top Amazon listings, rewriting copy to proactively address security fears and creating a "Trust & Safety" A+ Content module.</li>
-                <li>Execute an immediate **Keyword Infusion**, adding "camera" and Spanish keywords to backend search terms to instantly gain visibility in untapped markets.</li>
+                <li><i data-lucide="check-circle-2"></i><span>Implement a proactive **Brand Protection Protocol** to aggressively remove unauthorized resellers, immediately plugging the revenue leak and protecting ad spend.</span></li>
+                <li><i data-lucide="check-circle-2"></i><span>Conduct a **"Trust Overhaul"** on the top Amazon listings, rewriting copy to proactively address security fears and creating a "Trust & Safety" A+ Content module.</span></li>
+                <li><i data-lucide="check-circle-2"></i><span>Execute an immediate **Keyword Infusion**, adding "camera" and Spanish keywords to backend search terms to instantly gain visibility in untapped markets.</span></li>
             </ul>
             <h3>Phase 2: Market Expansion & Conversion Optimization (Days 31-60)</h3>
             <ul>
-                <li>Launch a **restructured PPC campaign** with dedicated ad groups for Core, Expansion (Cameras, Spanish), and Competitor Attack targets (Tello, Tracki).</li>
-                <li>Develop and deploy an **"Frictionless Onboarding" A+ Content module**, including a visual step-by-step activation guide and a "how-to" video to reduce negative reviews.</li>
-                <li>Optimize all image **alt-text** with strategic primary and secondary keywords, including Spanish terms, to boost organic SEO ranking.</li>
+                <li><i data-lucide="check-circle-2"></i><span>Launch a **restructured PPC campaign** with dedicated ad groups for Core, Expansion (Cameras, Spanish), and Competitor Attack targets (Tello, Tracki).</span></li>
+                <li><i data-lucide="check-circle-2"></i><span>Develop and deploy an **"Frictionless Onboarding" A+ Content module**, including a visual step-by-step activation guide and a "how-to" video to reduce negative reviews.</span></li>
+                <li><i data-lucide="check-circle-2"></i><span>Optimize all image **alt-text** with strategic primary and secondary keywords, including Spanish terms, to boost organic SEO ranking.</span></li>
             </ul>
             <h3>Phase 3: Solidify Market Leadership (Days 61-90)</h3>
             <ul>
-                <li>Create dedicated marketing creative and copy for the **"Peace of Mind for Parents"** campaign, targeting the core customer persona discovered in the reviews.</li>
-                <li>Introduce the **"Ecosystem Bundle"** strategy, proposing variations that pair SpeedTalk SIMs with popular devices to increase average order value.</li>
+                <li><i data-lucide="check-circle-2"></i><span>Create dedicated marketing creative and copy for the **"Peace of Mind for Parents"** campaign, targeting the core customer persona discovered in the reviews.</span></li>
+                <li><i data-lucide="check-circle-2"></i><span>Introduce the **"Ecosystem Bundle"** strategy, proposing variations that pair SpeedTalk SIMs with popular devices to increase average order value.</span></li>
             </ul>
         </section>
-                 <footer>
+
+        <footer>
             <p>This analysis demonstrates that with a targeted, data-driven approach, we can rapidly solve critical issues and unlock significant growth. I am confident in my ability to execute this plan and deliver measurable results.</p>
         </footer>
     </div>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
