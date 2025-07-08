@@ -28,9 +28,10 @@
         }
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 20px; /* Adjusted margin */
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 20px;
+            position: relative; /* Needed for positioning the button */
         }
         header h1 {
             color: var(--secondary-color);
@@ -42,6 +43,31 @@
             font-size: 1.1em;
             margin-top: 5px;
         }
+        /* --- NEW PRINT BUTTON STYLES --- */
+        .print-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-color);
+            transition: background-color 0.2s;
+        }
+        .print-button:hover {
+            background-color: #f0f0f0;
+        }
+        .print-button svg {
+            width: 18px;
+            height: 18px;
+        }
+        /* --- END NEW STYLES --- */
+
         .executive-summary {
             background-color: #E0E7FF;
             border-left: 5px solid var(--primary-color);
@@ -72,72 +98,74 @@
             color: var(--secondary-color);
             font-size: 1.4em;
         }
-        ul {
-            list-style-type: none;
-            padding-left: 0;
+        ul { list-style-type: none; padding-left: 0; }
+        li { position: relative; padding-left: 25px; margin-bottom: 10px; }
+        li::before { content: '✓'; position: absolute; left: 0; color: var(--primary-color); font-weight: bold; }
+        .threat li::before { content: '⚠️'; }
+        .opportunity li::before { content: '🚀'; }
+        .review-quote { border-left: 3px solid #FCA5A5; padding-left: 15px; font-style: italic; color: #4B5563; margin: 15px 0; }
+        details { margin-top: 15px; border: 1px solid var(--border-color); border-radius: 5px; padding: 10px; }
+        summary { cursor: pointer; font-weight: bold; color: var(--primary-color); }
+        footer { text-align: center; margin-top: 50px; color: #9CA3AF; font-size: 0.9em; }
+        .tag { display: inline-block; background-color: #DBEAFE; color: #1E40AF; padding: 3px 10px; border-radius: 15px; font-size: 0.85em; font-weight: 500; }
+
+        /* --- NEW PRINT-ONLY STYLES --- */
+        @media print {
+            body {
+                background-color: #FFFFFF;
+                font-size: 10pt;
+            }
+            .container {
+                margin: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+            .print-button, details summary {
+                display: none;
+            }
+            .card, .executive-summary {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+            header {
+                border-bottom: 2px solid #000;
+            }
+            h1, h2, h3 {
+                color: #000;
+            }
+            a {
+                text-decoration: none;
+                color: #000;
+            }
+            .tag {
+                border: 1px solid #ccc;
+                background-color: #fff;
+                color: #000;
+            }
         }
-        li {
-            position: relative;
-            padding-left: 25px;
-            margin-bottom: 10px;
-        }
-        li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-        .threat li::before {
-            content: '⚠️';
-        }
-        .opportunity li::before {
-            content: '🚀';
-        }
-        .review-quote {
-            border-left: 3px solid #FCA5A5;
-            padding-left: 15px;
-            font-style: italic;
-            color: #4B5563;
-            margin: 15px 0;
-        }
-        details {
-            margin-top: 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            padding: 10px;
-        }
-        summary {
-            cursor: pointer;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            color: #9CA3AF;
-            font-size: 0.9em;
-        }
-        .tag {
-            display: inline-block;
-            background-color: #DBEAFE;
-            color: #1E40AF;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 0.85em;
-            font-weight: 500;
-        }
+        /* --- END PRINT-ONLY STYLES --- */
     </style>
 </head>
 <body>
     <div class="container">
         <header>
+            <!-- NEW PRINT BUTTON -->
+            <button class="print-button" onclick="window.print()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a8.25 8.25 0 018.25-8.25H21M7.5 21H3.75A1.75 1.75 0 012 19.25V8.75A1.75 1.75 0 013.75 7H18a2.25 2.25 0 012.25 2.25v.193m-16.5 5.813c.24.03.48.062.72.096C5.065 15.245 5.754 15 6.5 15c.828 0 1.5.286 2.25.75 1.125.722 2.25.722 3.375 0s2.25-.722 3.375 0c.75.464 1.425.75 2.25.75.828 0 1.5-.286 2.25-.75 1.125-.722 2.25-.722 3.375 0s2.25.722 3.375 0M12 18.75a.75.75 0 100-1.5.75.75 0 000 1.5z" />
+                </svg>
+                Print / Save as PDF
+            </button>
+            <!-- END NEW PRINT BUTTON -->
+
             <h1>Strategic Analysis & Growth Plan</h1>
             <p>Prepared for: [Agency Name]</p>
             <p>Prepared by: John Wesley Quintero</p>
             <p>Brand Focus: <strong>SpeedTalk Mobile</strong></p>
         </header>
 
+        <!-- The rest of your content remains the same... -->
         <section class="executive-summary">
             <h2>Executive Summary</h2>
             <p>SpeedTalk Mobile possesses a strong, technically performant website and a product that serves a clear niche. However, its growth is critically hampered by brand trust issues, revenue leakage from unauthorized resellers, and significant missed market opportunities. This report outlines a data-driven, three-phase strategy to address these threats, capitalize on untapped markets, and position SpeedTalk for dominant market leadership. The proposed initiatives will directly increase revenue, improve ad spend efficiency, and build long-term brand equity.</p>
