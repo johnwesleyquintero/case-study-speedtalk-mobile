@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeedTalk Mobile Sentiment Analysis Report</title>
+    <style>
+        :root {
+            --primary-bg: #f8f8f8;
+            --container-bg: #ffffff;
+            --text-color: #333;
+            --header-color: #2c3e50;
+            --accent-color: #3498db;
+            --border-color: #e0e0e0;
+            --negative-color: #e74c3c;
+            --positive-color: #2ecc71;
+            --neutral-color: #f1c40f;
+            --table-header-bg: #ecf0f1;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem 1rem;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background-color: var(--container-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            padding: 2.5rem;
+        }
+
+        h1, h2, h3, h4, h5 {
+            color: var(--header-color);
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        h4 {
+            font-size: 1.4rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        h5 {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.8rem 1rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--table-header-bg);
+            font-weight: bold;
+            color: var(--header-color);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f6f6f6;
+        }
+
+        .sentiment-category strong {
+            font-weight: bold;
+        }
+        .sentiment-category.negative { color: var(--negative-color); }
+        .sentiment-category.positive { color: var(--positive-color); }
+        .sentiment-category.neutral { color: var(--neutral-color); }
+
+        .theme-section {
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+        }
+
+        details {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            background-color: #fefefe;
+        }
+
+        summary {
+            padding: 1rem 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+            color: var(--header-color);
+            display: block; /* Ensures full width click area */
+            position: relative;
+        }
+
+        summary::marker {
+            display: none; /* Hide default marker */
+        }
+
+        summary::before {
+            content: '►'; /* Custom expand icon */
+            position: absolute;
+            left: 15px;
+            font-size: 0.9em;
+            transition: transform 0.2s;
+        }
+
+        details[open] > summary::before {
+            transform: rotate(90deg);
+        }
+
+        .details-content {
+            padding: 0 1.2rem 1rem;
+        }
+
+        .details-content p {
+            margin-top: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        blockquote {
+            background-color: #f0f8ff;
+            border-left: 4px solid var(--accent-color);
+            margin: 1rem 0;
+            padding: 0.8rem 1.2rem;
+            font-style: italic;
+            color: #555;
+            border-radius: 4px;
+        }
+
+        blockquote p {
+            margin: 0;
+        }
+
+        .intro-text {
+            background-color: #e6f7ff;
+            border-left: 5px solid var(--accent-color);
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 5px;
+        }
+
+        .intro-text p {
+            margin: 0;
+            font-style: italic;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SpeedTalk Mobile Customer Review Sentiment Analysis</h1>
+
+        <div class="intro-text">
+            <p>This report analyzes 46 customer reviews for the SpeedTalk Mobile $5 Prepaid Wireless Plan, identifying overall sentiment and the key themes driving customer satisfaction and dissatisfaction.</p>
+            <p>Please note: Sentiment analysis is an interpretation of language, and factors like sarcasm or complex sentence structures can sometimes be challenging to classify with 100% accuracy. The analysis is based solely on the provided text.</p>
+        </div>
+
+        <section>
+            <h4>1. Overall Sentiment Breakdown</h4>
+            <p>Based on the content of the reviews, here's the overall sentiment distribution:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sentiment Category</th>
+                        <th>Number of Reviews</th>
+                        <th>Percentage (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="sentiment-category negative"><strong>Negative</strong></td>
+                        <td>33</td>
+                        <td>71.7%</td>
+                    </tr>
+                    <tr>
+                        <td class="sentiment-category positive"><strong>Positive</strong></td>
+                        <td>11</td>
+                        <td>23.9%</td>
+                    </tr>
+                    <tr>
+                        <td class="sentiment-category neutral"><strong>Neutral/Mixed</strong></td>
+                        <td>2</td>
+                        <td>4.3%</td>
+                    </tr>
+                    <tr>
+                        <td class="sentiment-category"><strong>Total</strong></td>
+                        <td><strong>46</strong></td>
+                        <td><strong>100.0%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>The vast majority of the reviews provided (71.7%) express a negative sentiment towards the SpeedTalk Mobile service. A smaller but notable portion (23.9%) are positive, while a very small percentage (4.3%) are neutral or mixed.</p>
+        </section>
+
+        <section class="theme-section">
+            <h4>2. Key Thematic Analysis & Aspect-Based Sentiment</h4>
+            <p>The negative sentiment is strongly concentrated around specific recurring issues, while positive sentiment highlights the product's core value proposition. Expand the sections below to see details and illustrative examples for each theme.</p>
+
+            <h5 class="sentiment-category negative">A. Negative Themes</h5>
+
+            <details>
+                <summary>Activation Process Difficulty & Requirements (Highly Negative)</summary>
+                <div class="details-content">
+                    <p>Many users encountered significant hurdles during activation, citing glitchy websites, convoluted instructions, and an excessive demand for personal information, including credit card details and Amazon order numbers, which users felt was inappropriate for a "no-contract" prepaid service. This theme also includes issues with SIM cards arriving already activated or expired.</p>
+                    <h6>Illustrative Examples:</h6>
+                    <blockquote><p>This card is very difficult to activate online. I don't know about calling it in but going through the activation process online was an arduous, glitchy task... they want your life story and practically a DNA sample all just to start up a 1 month no contract quickie account.</p></blockquote>
+                    <blockquote><p>I activated a sim card and did received an email with the number. ... It has been overnight and the device is not recognizing the card as active.</p></blockquote>
+                    <blockquote><p>I tried to contact Speedtalk Mobile on their website using the 'Contact Us' support form which does not work. It keeps giving me the error 'No valid sum, try again'.</p></blockquote>
+                    <blockquote><p>It is a weird company that requires your credit card info to activate even though it is a prepaid SIM.</p></blockquote>
+                    <blockquote><p>...in order to activate the sim, you need to provide your name, full address, working phone number, verifiable email address, bank-issued credit card, and so on.</p></blockquote>
+                    <blockquote><p>The sim never worked in my device, and support is basically nonexistent. ... to activate a sim you must provide a credit card number...</p></blockquote>
+                    <blockquote><p>Todays date 6-6-2023 and an exspired card arrived, couldnt even get through to cell Co.</p></blockquote>
+                    <blockquote><p>I was provided with a USED SIM card number.. So thank you AMAZON for ruining my sons Christmas present 2 days before Christmas…..</p></blockquote>
+                </div>
+            </details>
+
+            <details>
+                <summary>Billing & Credit Card Concerns (Highly Negative)</summary>
+                <div class="details-content">
+                    <p>A significant number of negative reviews allege unauthorized charges, credit card compromises, and hidden auto-renewal settings that are difficult to cancel. Users expressed distrust and frustration with the company's handling of payment information.</p>
+                    <h6>Illustrative Examples:</h6>
+                    <blockquote><p>If you're not paying close attention, when you finally click the final OK, there's a box checked that says yes you want to autopay each month.</p></blockquote>
+                    <blockquote><p>I was a victim of debit card and credit card theft because I used them for renewing the monthly plan for this card. ... Consider using Privacy.com or a prepaid credit card...</p></blockquote>
+                    <blockquote><p>Charged me three times, two months apart... there’s no where for me to cancel it.</p></blockquote>
+                    <blockquote><p>Within a few days after starting my subscription with them my credit card was compromised and I was seeing order for Apple products that I didn't order.</p></blockquote>
+                    <blockquote><p>Beware, once you give them your credit card they will seal the number and use it. Had to have my credit card cancelled because of that.</p></blockquote>
+                    <blockquote><p>Requires credit card, recurring payments scam... almost certainly intentionally made incredibly difficult to cancel, as it's not prominently disclosed...</p></blockquote>
+                    <blockquote><p>I was charged for 10 months for nothing. The SIM card never worked!</p></blockquote>
+                </div>
+            </details>
+
+            <details>
+                <summary>Customer Service & Support Quality (Highly Negative)</summary>
+                <div class="details-content">
+                    <p>Customers frequently reported extreme difficulty reaching customer support, unhelpful agents, non-working phone numbers, and slow or non-existent email responses.</p>
+                    <h6>Illustrative Examples:</h6>
+                    <blockquote><p>customer service is a joke. It is extremely challenging to understand them and they always changed how long to wait to see if the watch got service.</p></blockquote>
+                    <blockquote><p>...they were SO unhelpful (i.e., they explicitly refused to do anything or to engage or to explain) and so curt...</p></blockquote>
+                    <blockquote><p>TOTAL SCAM - No Support... I tried to contact Speedtalk Mobile on their website using the 'Contact Us' support form which does not work.</p></blockquote>
+                    <blockquote><p>I have contacted SpeedTalkMobile to ask for help and/or receive a partial refund since we haven’t been able to use them successfully. All I receive in return is that we should have contacted them within 14 days.</p></blockquote>
+                    <blockquote><p>Customer service never get through</p></blockquote>
+                    <blockquote><p>I called support but no response back.</p></blockquote>
+                    <blockquote><p>Customer service put me on hold and eventually just ended call.</p></blockquote>
+                    <blockquote><p>I tried to contact them by email but the problem never be resolved.</p></blockquote>
+                </div>
+            </details>
+
+            <details>
+                <summary>Service/Product Not Working (Negative)</summary>
+                <div class="details-content">
+                    <p>A significant number of reviews state that the SIM card or service simply did not work after activation, often with smartwatches or specific phone models, or stopped working shortly after. Issues include no signal, inability to make calls/texts, or extremely slow data.</p>
+                    <h6>Illustrative Examples:</h6>
+                    <blockquote><p>I purchased two and neither of the SIM cards ever worked...</p></blockquote>
+                    <blockquote><p>my SIM could not be activated. I got an error message that said they would not activate my SIM because I already had several activations...</p></blockquote>
+                    <blockquote><p>The sim card doesnt work! It works the first time I activated the card, then it stops working.</p></blockquote>
+                    <blockquote><p>This product is NOT compatible with a 2g device even though it says it is.</p></blockquote>
+                    <blockquote><p>This product was to be used to power our non internet cell phone, that is 3G... the company said that it only worked on 4G, worthless to us...</p></blockquote>
+                    <blockquote><p>I could not even get the speed talk web page to open. To sell this to someone and not have it work. Is just crazy.</p></blockquote>
+                    <blockquote><p>Can’t get any phone call.</p></blockquote>
+                </div>
+            </details>
+
+            <details>
+                <summary>Unwanted Phone Number / Spam (Negative)</summary>
+                <div class="details-content">
+                    <p>One review highlighted a significant issue with the "new" phone number provided, indicating it was previously used and came with "baggage" like spam calls/texts and even the previous owner's personal information.</p>
+                    <h6>Illustrative Examples:</h6>
+                    <blockquote><p>The random phone number that it gave me came with a lot of 'baggage.' First of all it still has the previous owner's identity attached to it, and I'm getting texts and calls on it from the moment I got it for this other person. Secondly it must already be on a ton of spam lists...</p></blockquote>
+                </div>
+            </details>
+
+            <h5 class="sentiment-category positive">B. Positive Themes</h5>
+
+            <details>
+                <summary>Affordability & Value for Price (Positive)</summary>
+                <div class="details-content">
+                    <p>The most frequently praised aspect is the low cost of the plan ($5/month) and the overall value it provides for basic talk, text, and minimal data, especially for specific use cases like kids' phones or emergency/backup devices.</p>
+                    <h6>Illustrative Examples:</h6>
+                    <blockquote><p>This is the third time I buy this product because I really enjoy the service for the price.</p></blockquote>
+                    <blockquote><p>Perfect Budget Option For a Kid's Phone... The price can't be beat. We pay $5 per month to have cell phone service for my son's phone...</p></blockquote>
+                    <blockquote><p>for 5$ a month you can keep it stashed for emergencies. The ease with which you can activate it without using any personal info (not real info, anyway - pro tip use a prepaid debit/Visa gift card paid in cash) makes it also great for those times when you just need a phone to do stuff you don't want to use your phone for.</p></blockquote>
+                    <blockquote><p>Great value</p></blockquote>
+                    <blockquote><p>Value for Money... for SMS and phone calls, it's a great value.</p></blockquote>
+                    <blockquote><p>Best ever for the price and worth it.</p></blockquote>
+                </div>
+            </details>
+
+            <details>
+                <summary>Ease of Setup/Activation (Positive, but Contradicted by Negative)</summary>
+                <div class="details-content">
+                    <p>While many experienced severe activation issues, a subset of positive reviews specifically highlighted the activation process as quick, easy, and seamless. This indicates a highly inconsistent user experience.</p>
+                    <h6>Illustrative Examples:</h6>
+                    <blockquote><p>Super quick and easy to setup... Took just a couple minutes. Inserted the SIM card, and within 10 minutes the phone was active.</p></blockquote>
+                    <blockquote><p>It was really easy to set up.</p></blockquote>
+                    <blockquote><p>Easy to activate! Easy to use!</p></blockquote>
+                    <blockquote><p>Really easy to get it working! ...You only need 5 minutes from you getting card cut to needed size until activation.</p></blockquote>
+                    <blockquote><p>Easy account setup</p></blockquote>
+                    <blockquote><p>Super quick and easy to setup</p></blockquote>
+                    <blockquote><p>Very easy to install and activate.</p></blockquote>
+                    <blockquote><p>Was able to activate just via the Web. Took me 5 min. Works great.</p></blockquote>
+                </div>
+            </details>
+
+            <details>
+                <summary>Functionality & Performance (Positive)</summary>
+                <div class="details-content">
+                    <p>When the service does work, users are generally satisfied with its core functionality, including call quality, texting, and coverage for basic use. Some found it suitable for specific devices like smartwatches or alarm systems.</p>
+                    <h6>Illustrative Examples:</h6>
+                    <blockquote><p>After getting it set up, it worked like a charm... Reception was decent, no complaints about the service (in my area, at least).</p></blockquote>
+                    <blockquote><p>The service gets comparable coverage and signal to my own TMobile phone.</p></blockquote>
+                    <blockquote><p>This SIM and Cell service works perfectly when we changed the SIM from the poorly made GPS watches into a different device. The phone/device calls and text with no problems whatsoever.</p></blockquote>
+                    <blockquote><p>For watches, alarm systems, GPS tracking, SpeedTalk works great.</p></blockquote>
+                    <blockquote><p>Works as expected... easy to activate and install. Worked upon activation. No issues.</p></blockquote>
+                </div>
+            </details>
+
+            <details>
+                <summary>Universal Compatibility & SIM Card Design (Positive)</summary>
+                <div class="details-content">
+                    <p>The triple-cut SIM card design (Mini/Micro/Nano) was appreciated for its versatility across various devices.</p>
+                    <h6>Illustrative Examples:</h6>
+                    <blockquote><p>I love, love, love that the card comes with an adjustable SIM card for size... These chips will fit them all!</p></blockquote>
+                </div>
+            </details>
+
+            <h5 class="sentiment-category neutral">C. Neutral/Mixed Themes</h5>
+
+            <details>
+                <summary>Limited Data Allowance</summary>
+                <div class="details-content">
+                    <p>While 100MB is disclosed, some reviews mention it's quickly consumed, leading to a need for Wi-Fi or higher plans. This is more of an observation than a complaint.</p>
+                    <h6>Illustrative Examples:</h6>
+                    <blockquote><p>Just realize 100 MB data is only about 8 minutes of streaming (Netflix, Youtube, etc), so your data gets eaten up fast.</p></blockquote>
+                    <blockquote><p>It should be noted that these aren't for data. Yeah you get 100mb but see how far that gets you on today's internet.</p></blockquote>
+                </div>
+            </details>
+
+            <details>
+                <summary>Mandatory Credit Card for Prepaid</summary>
+                <div class="details-content">
+                    <p>Some users expressed a neutral or resigned acceptance of needing a credit card for activation, even if they disliked the auto-pay aspect.</p>
+                    <h6>Illustrative Examples:</h6>
+                    <blockquote><p>You DO need to enter a payment method before you can turn on service. I hate this, and they were picky about what kinds of payments they accept.</p></blockquote>
+                    <blockquote><p>It annoys me that I can't have a pre-paid card without a monthly charge.</p></blockquote>
+                </div>
+            </details>
+        </section>
+
+        <section class="theme-section">
+            <h4>3. Summary of Findings</h4>
+            <p>The sentiment analysis for SpeedTalk Mobile reveals a stark division in customer experience. The overwhelmingly negative sentiment (71.7%) is driven by critical issues related to:</p>
+            <ul>
+                <li><strong>Activation Difficulty:</strong> Glitchy processes, excessive personal data requirements, and instances of SIM cards arriving pre-activated or expired.</li>
+                <li><strong>Billing & Security Concerns:</strong> Allegations of credit card compromise, unauthorized auto-renewals that are hard to cancel, and opaque payment practices.</li>
+                <li><strong>Customer Support Deficiencies:</strong> Persistent complaints about unresponsiveness, language barriers, and general ineffectiveness of customer service channels.</li>
+                <li><strong>Product Non-Functionality:</strong> Many users report the service simply not working as advertised, particularly for specific devices or 2G/3G compatibility.</li>
+            </ul>
+            <p>Conversely, the positive sentiment (23.9%) is almost exclusively tied to the product's <strong>affordability</strong> and its <strong>effectiveness as a basic, low-cost solution</strong> for specific use cases (e.g., kids' smartwatches, emergency phones), <em>provided the user successfully navigates the significant activation and payment hurdles</em>. There's a notable dichotomy in the "ease of activation" theme, indicating a highly inconsistent user journey.</p>
+            <p>In conclusion, while the product concept of an affordable prepaid plan resonates positively with a segment of users, operational issues related to activation, customer support, and financial security are causing widespread dissatisfaction and overshadowing its core value proposition.</p>
+        </section>
+    </div>
+</body>
+</html>
