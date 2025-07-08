@@ -47,13 +47,30 @@
         header h1 { color: var(--secondary-color); font-size: 2.5em; margin: 0; }
         header p { color: #6B7280; font-size: 1.1em; margin-top: 5px; }
         .print-button {
-            position: absolute; top: 0; right: 0; cursor: pointer; background: none;
-            border: 1px solid var(--border-color); border-radius: 5px; padding: 8px 12px;
-            display: flex; align-items: center; gap: 8px; color: var(--text-color);
-            transition: background-color 0.2s;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.2s;
+            border: none;
+            cursor: pointer;
         }
-        .print-button:hover { background-color: #f0f0f0; }
-        .print-button svg { width: 18px; height: 18px; }
+        .print-button:hover {
+            transform: scale(1.03);
+        }
+        .print-button .lucide {
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
         .intro-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -167,10 +184,6 @@
 <body>
     <div class="container">
         <header>
-            <button class="print-button" onclick="window.print()">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a8.25 8.25 0 018.25-8.25H21M7.5 21H3.75A1.75 1.75 0 012 19.25V8.75A1.75 1.75 0 013.75 7H18a2.25 2.25 0 012.25 2.25v.193m-16.5 5.813c.24.03.48.062-.72.096C5.065 15.245 5.754 15 6.5 15c.828 0 1.5.286 2.25.75 1.125.722 2.25.722 3.375 0s2.25-.722 3.375 0c.75.464 1.425.75 2.25.75.828 0 1.5-.286 2.25-.75 1.125-.722 2.25-.722 3.375 0s2.25.722 3.375 0M12 18.75a.75.75 0 100-1.5.75.75 0 000 1.5z" /></svg>
-                Print / Save as PDF
-            </button>
             <h1>Strategic Analysis & Growth Plan</h1>
             <p>Prepared for: VAXPH</p>
             <p>Prepared by: John Wesley Quintero</p>
@@ -190,6 +203,10 @@
             <div class="product-showcase">
                 <img src="https://m.media-amazon.com/images/I/61RJKSLBB+L._AC_SL1500_.jpg" alt="SpeedTalk Mobile $5 Prepaid SIM Card Product Image">
                 <a href="https://a.co/d/776BcV1" target="_blank" class="amazon-button">View Live Amazon Listing</a>
+                <button class="print-button" onclick="window.print()">
+                    <i class="lucide" data-lucide="printer"></i>
+                    <span>Print / Save as PDF</span>
+                </button>
             </div>
         </div>
 
