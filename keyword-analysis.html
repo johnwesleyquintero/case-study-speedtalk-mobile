@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeedTalk Mobile Keyword Analysis</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+            --light-text-color: #7f8c8d;
+            --card-bg: #ffffff;
+            --border-color: #dcdcdc;
+            --header-bg: #f5f5f5;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border-bottom: 5px solid var(--secondary-color);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            line-height: 1.2;
+        }
+
+        header p {
+            margin: 0.8rem 0 0;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        section {
+            margin-bottom: 2.5rem;
+            background-color: var(--header-bg);
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            padding: 1.2rem 1.5rem;
+            margin: 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--header-bg);
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+        }
+        h2::before {
+            content: "•";
+            color: var(--accent-color);
+            margin-right: 0.75rem;
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .analysis-step details {
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: var(--card-bg);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+        }
+
+        .analysis-step summary {
+            font-size: 1.3rem;
+            font-weight: 600;
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            background-color: var(--secondary-color);
+            color: white;
+            border-bottom: 1px solid var(--secondary-color);
+            transition: background-color 0.2s ease;
+            display: block; /* Ensures summary takes full width */
+            position: relative;
+            outline: none; /* Remove dotted outline on click */
+        }
+        .analysis-step summary:hover {
+            background-color: #2980b9;
+        }
+        .analysis-step summary::-webkit-details-marker {
+            display: none; /* Hide default marker */
+        }
+        .analysis-step summary::after {
+            content: "+";
+            position: absolute;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.2s ease;
+        }
+        .analysis-step details[open] summary::after {
+            content: "−";
+            transform: translateY(-50%) rotate(0deg);
+        }
+        .analysis-step details[open] summary {
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        .analysis-step details > div {
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+        }
+
+        p, ul, ol {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            background-color: var(--card-bg);
+            border-radius: 6px;
+            overflow: hidden; /* Ensures border-radius applies to table */
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        code {
+            background-color: var(--background-color);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: var(--accent-color);
+        }
+        pre {
+            background-color: var(--background-color);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+        pre code {
+            display: block;
+            padding: 0;
+            background-color: transparent;
+            color: var(--text-color);
+        }
+
+        .alert-box {
+            background-color: #fcebeb;
+            border-left: 5px solid var(--accent-color);
+            padding: 1rem 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 4px;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .filter-container {
+            padding: 1rem 1.5rem;
+            background-color: var(--header-bg);
+            border-bottom: 1px solid var(--border-color);
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .filter-container input[type="text"] {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .filter-container input[type="text"]:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        .filter-container label {
+            font-weight: 600;
+            color: var(--text-color);
+            white-space: nowrap;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            header {
+                padding: 1.5rem 1rem;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+            header p {
+                font-size: 1rem;
+            }
+            main {
+                padding: 1rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+                padding: 1rem;
+            }
+            .analysis-step summary {
+                font-size: 1.1rem;
+                padding: 1rem;
+            }
+            .analysis-step details > div {
+                padding: 1rem;
+            }
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.85rem;
+            }
+            .filter-container {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SpeedTalk Mobile $5 Prepaid Wireless Plan Keyword Analysis</h1>
+            <p>Detailed breakdown of keyword performance and strategic implications for SpeedTalk Mobile's prepaid SIM card and phone plan.</p>
+        </header>
+
+        <main>
+            <p>I have performed a keyword analysis for the "SpeedTalk Mobile $5 Prepaid Wireless Pay Go Plan for Smartphones & Cellphones" based on the provided data. This report outlines the strategic implications for this product.</p>
+            <p>Here is my proposed plan of action:</p>
+            <ol>
+                <li><strong>Data Preparation:</strong> I have parsed the provided keyword data into a structured format and filtered out irrelevant entries.</li>
+                <li><strong>Overview of Key Metrics:</strong> I will explain the relevance of "Cerebro IQ Score," "Search Volume," and "Search Volume Trend" in the context of keyword analysis.</li>
+                <li><strong>High-Level Analysis:</strong> I'll identify keywords with high search volume, strong Cerebro IQ scores, and positive search volume trends relevant to this product.</li>
+                <li><strong>Competitive Landscape Assessment:</strong> I will analyze "Competing Products" and "Title Density" to understand the competition for these keywords.</li>
+                <li><strong>Relevance to Product:</strong> I'll cross-reference these keywords with the SpeedTalk Mobile product's features and description to identify the most pertinent ones.</li>
+                <li><strong>Summary of Insights:</strong> I will provide a concise summary of the key findings and their potential implications for the SpeedTalk Mobile product's keyword strategy.</li>
+            </ol>
+
+            <section class="analysis-step">
+                <details open>
+                    <summary>Step 1: Data Preparation</summary>
+                    <div>
+                        <p>I have parsed the raw text data into a table format for clear readability and analysis. Crucially, keywords clearly related to "GPS trackers" or "vehicle tracking" have been filtered out as they are irrelevant to SpeedTalk Mobile's prepaid wireless plan product.</p>
+                        <h3>Assumptions & Limitations:</h3>
+                        <ul>
+                            <li>I am assuming "Cerebro IQ Score" is a proprietary metric indicating the overall attractiveness or effectiveness of a keyword, with higher values being more desirable.</li>
+                            <li>The <code>Sugg. PPC Bid</code> and <code>Keyword Sales</code> columns contain "-" values, indicating that this data is not available in the provided dataset. Therefore, I cannot analyze these specific metrics.</li>
+                            <li>The context for <code>Organic Rank</code> is unclear (i.e., is it for this specific product, or an average across the category?). Without further clarification, I will present this data but will not draw definitive conclusions from it regarding the SpeedTalk Mobile product's current performance.</li>
+                        </ul>
+                    </div>
+                </details>
+            </section>
+
+            <section class="keyword-data">
+                <h2>Structured Keyword Data</h2>
+                <div class="filter-container">
+                    <label for="keywordSearch">Filter Keywords:</label>
+                    <input type="text" id="keywordSearch" placeholder="Type to search keywords...">
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Keyword Phrase</th>
+                            <th>Cerebro IQ Score</th>
+                            <th>Search Volume</th>
+                            <th>Search Volume Trend</th>
+                            <th>Competing Products</th>
+                            <th>Title Density</th>
+                            <th>Organic Rank</th>
+                        </tr>
+                    </thead>
+                    <tbody id="keywordTableBody">
+                        <tr><td>sim</td><td>3816</td><td>11448</td><td>-67</td><td>3000</td><td>43</td><td>110</td></tr>
+                        <tr><td>sim card</td><td>1037</td><td>10372</td><td>-5</td><td>10000</td><td>38</td><td>56</td></tr>
+                        <tr><td>tello sim card</td><td>18746</td><td>4274</td><td>3</td><td>228</td><td>-</td><td>71</td></tr>
+                        <tr><td>prepaid visa card</td><td>19892</td><td>4058</td><td>-3</td><td>204</td><td>-</td><td>21</td></tr>
+                        <tr><td>boost mobile phones</td><td>507</td><td>4056</td><td>13</td><td>8000</td><td>2</td><td>12</td></tr>
+                        <tr><td>mint mobile sim card</td><td>16000</td><td>3408</td><td>-2</td><td>213</td><td>-</td><td>79</td></tr>
+                        <tr><td>mint mobile</td><td>23618</td><td>3401</td><td>19</td><td>144</td><td>2</td><td>66</td></tr>
+                        <tr><td>prepaid sim card</td><td>3665</td><td>3042</td><td>1</td><td>830</td><td>19</td><td>85</td></tr>
+                        <tr><td>prepaid sim card usa</td><td>6168</td><td>2393</td><td>-4</td><td>388</td><td>1</td><td>95</td></tr>
+                        <tr><td>tello</td><td>9540</td><td>2242</td><td>-1</td><td>235</td><td>35</td><td>145</td></tr>
+                        <tr><td>sim card for camera</td><td>20317</td><td>2113</td><td>8</td><td>104</td><td>-</td><td>23</td></tr>
+                        <tr><td>us mobile sim card</td><td>1803</td><td>1803</td><td>13</td><td>1000</td><td>10</td><td>124</td></tr>
+                        <tr><td>esim</td><td>150083</td><td>1801</td><td>-3</td><td>12</td><td>-</td><td>7</td></tr>
+                        <tr><td>ultra mobile sim card</td><td>3791</td><td>1581</td><td>-</td><td>417</td><td>-</td><td>60</td></tr>
+                        <tr><td>t mobile sim card</td><td>4154</td><td>1562</td><td>14</td><td>376</td><td>-</td><td>95</td></tr>
+                        <tr><td>data only sim card</td><td>1555</td><td>1555</td><td>-4</td><td>1000</td><td>17</td><td>70</td></tr>
+                        <tr><td>boost mobile phones unlocked</td><td>1510</td><td>1510</td><td>11</td><td>1000</td><td>-</td><td>13</td></tr>
+                        <tr><td>tmobile sim card</td><td>4651</td><td>1344</td><td>-3</td><td>289</td><td>-</td><td>95</td></tr>
+                        <tr><td>ultra sim card</td><td>3786</td><td>1344</td><td>2</td><td>355</td><td>-</td><td>63</td></tr>
+                        <tr><td>lycamobile sim card</td><td>5441</td><td>1344</td><td>-3</td><td>247</td><td>-</td><td>70</td></tr>
+                        <tr><td>esim cards for international travel</td><td>4151</td><td>1320</td><td>2</td><td>318</td><td>-</td><td>132</td></tr>
+                        <tr><td>boost mobile</td><td>141</td><td>1269</td><td>40</td><td>9000</td><td>20</td><td>1</td></tr>
+                        <tr><td>straight talk phone card</td><td>11268</td><td>1262</td><td>16</td><td>112</td><td>-</td><td>72</td></tr>
+                        <tr><td>tracfone sim card</td><td>4292</td><td>1189</td><td>22</td><td>277</td><td>-</td><td>89</td></tr>
+                        <tr><td>sim cards for cell phones</td><td>192</td><td>1151</td><td>-9</td><td>6000</td><td>-</td><td>85</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="analysis-step">
+                <details>
+                    <summary>Step 2: Overview of Key Metrics</summary>
+                    <div>
+                        <ul>
+                            <li><strong>Cerebro IQ Score:</strong> A higher score indicates a potentially more valuable keyword, considering a balance of search volume, competition, and other factors.</li>
+                            <li><strong>Search Volume:</strong> Represents the estimated number of monthly searches for that keyword. Higher volume indicates more potential visibility.</li>
+                            <li><strong>Search Volume Trend:</strong> Shows the recent change in search volume (e.g., a positive number means increasing interest, negative means decreasing).</li>
+                            <li><strong>Competing Products:</strong> The number of products currently indexed for this keyword. Lower numbers suggest less competition.</li>
+                            <li><strong>Title Density:</strong> The number of competing products that have the exact keyword phrase in their product title. Lower numbers indicate less direct competition for title optimization.</li>
+                        </ul>
+                    </div>
+                </details>
+            </section>
+
+            <section class="analysis-step">
+                <details>
+                    <summary>Step 3: High-Level Analysis</summary>
+                    <div>
+                        <p>Let's examine the relevant keywords based on their search volume, Cerebro IQ score, and trend:</p>
+                        <ul>
+                            <li><strong>Top Search Volume Keywords:</strong>
+                                <ul>
+                                    <li>"sim" (11448)</li>
+                                    <li>"sim card" (10372)</li>
+                                    <li>"tello sim card" (4274)</li>
+                                    <li>"prepaid visa card" (4058)</li>
+                                    <li>"boost mobile phones" (4056)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Keywords with Strong Cerebro IQ Scores:</strong>
+                                <ul>
+                                    <li>"esim" (150083) - <em>Extremely high, indicates high potential.</em></li>
+                                    <li>"mint mobile" (23618)</li>
+                                    <li>"sim card for camera" (20317)</li>
+                                    <li>"prepaid visa card" (19892)</li>
+                                    <li>"tello sim card" (18746)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Keywords with Positive Search Volume Trend:</strong>
+                                <ul>
+                                    <li>"boost mobile" (Trend: 40)</li>
+                                    <li>"tracfone sim card" (Trend: 22)</li>
+                                    <li>"mint mobile" (Trend: 19)</li>
+                                    <li>"straight talk phone card" (Trend: 16)</li>
+                                    <li>"t mobile sim card" (Trend: 14)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </details>
+            </section>
+
+            <section class="analysis-step">
+                <details>
+                    <summary>Step 4: Competitive Landscape Assessment</summary>
+                    <div>
+                        <ul>
+                            <li><strong>Highly Competitive Keywords (High Competing Products/Title Density):</strong>
+                                <ul>
+                                    <li>"sim card" (10000 competing products, 38 title density)</li>
+                                    <li>"boost mobile phones" (8000 competing products, 2 title density)</li>
+                                    <li>"sim cards for cell phones" (6000 competing products, - title density)</li>
+                                    <li>"sim" (3000 competing products, 43 title density)</li>
+                                    <li>"data only sim card" (1000 competing products, 17 title density)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Keywords with Relatively Lower Competition (despite good volume/IQ):</strong>
+                                <ul>
+                                    <li>"esim" (12 competing products, - title density) - <em>Extremely low competition for its very high IQ and search volume.</em></li>
+                                    <li>"tello sim card" (228 competing products, - title density)</li>
+                                    <li>"prepaid visa card" (204 competing products, - title density) - <em>Though less relevant to the product.</em></li>
+                                    <li>"mint mobile sim card" (213 competing products, - title density)</li>
+                                    <li>"sim card for camera" (104 competing products, - title density) - <em>Specific niche.</em></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </details>
+            </section>
+
+            <section class="analysis-step">
+                <details>
+                    <summary>Step 5: Relevance to SpeedTalk Mobile Product Description</summary>
+                    <div>
+                        <p>Based on the SpeedTalk Mobile product description: "$5 Prepaid Wireless Pay Go Plan for Smartphones & Cellphones | 5G 4G LTE | 100 Talk, 100 Text, 100 MB Data |Triple Cut (Mini,Micro,Nano) Sim Card | No Contract | 30-Day Service...", here's how the keywords align:</p>
+                        <ul>
+                            <li><strong>Highly Relevant and Direct Match:</strong>
+                                <ul>
+                                    <li><code>sim card</code>: Core product component.</li>
+                                    <li><code>sim</code>: Broader term for the core component.</li>
+                                    <li><code>prepaid sim card</code>, <code>prepaid sim card usa</code>: Directly matches the "Prepaid" and "30-Day Service / Pay Go Plan" aspects.</li>
+                                    <li><code>sim cards for cell phones</code>: Highly relevant as it's for smartphones/cellphones.</li>
+                                    <li><code>data only sim card</code>: While the plan includes talk/text, a data-only option might be offered or relevant to a segment of users.</li>
+                                    <li><code>esim</code>, <code>esim cards for international travel</code>: While SpeedTalk Mobile's offering is a physical SIM, the high Cerebro IQ and low competition for "esim" indicate a significant and growing market trend. SpeedTalk could consider this for future offerings or as a related search intent.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Relevant, but Brand-Specific or Nuanced (Competitors):</strong>
+                                <ul>
+                                    <li><code>tello sim card</code>, <code>mint mobile sim card</code>, <code>us mobile sim card</code>, <code>ultra mobile sim card</code>, <code>t mobile sim card</code>, <code>lycamobile sim card</code>, <code>tracfone sim card</code>, <code>straight talk phone card</code>: These are direct competitors. SpeedTalk Mobile can target these, highlighting its competitive advantages (e.g., "$5 plan," "no contract") against these brands.</li>
+                                    <li><code>boost mobile phones</code>, <code>boost mobile phones unlocked</code>, <code>boost mobile</code>, <code>mint mobile</code>, <code>tello</code>, <code>t mobile</code>: These are broader brand terms for competitors. While competitive, they represent significant search volume and can be targeted strategically.</li>
+                                    <li><code>sim card for camera</code>: A niche use case for SIM cards. SpeedTalk's product is "for Smartphones & Cellphones," so this is less directly relevant but shows a broader market for SIM cards.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Irrelevant:</strong>
+                                <ul>
+                                    <li><code>prepaid visa card</code>: This is a financial product, entirely unrelated to a mobile plan or SIM card.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </details>
+            </section>
+
+            <section class="summary-findings">
+                <h2>Summary of Key Findings</h2>
+                <ul>
+                    <li><strong>Core Term Dominance:</strong> "Sim" and "sim card" are foundational, high-volume keywords essential for targeting. SpeedTalk Mobile should ensure strong optimization for these generic terms.</li>
+                    <li><strong>"Prepaid" & "No Contract" Value Proposition:</strong> Keywords like "prepaid sim card" and implicit "no contract" (as described in the product) are highly relevant. Emphasizing the $5 price point in conjunction with these terms will resonate with cost-conscious consumers.</li>
+                    <li><strong>Emerging eSIM Trend:</strong> The keyword "esim" shows extremely high Cerebro IQ and remarkably low competition. While SpeedTalk offers a physical SIM, this indicates a strong, growing market interest in digital SIMs that could be a future product consideration or a valuable keyword to target with content educating users on physical vs. eSIM.</li>
+                    <li><strong>Competitive Landscape:</strong> Many top keywords are brand-specific competitor names (Tello, Mint Mobile, Boost Mobile, etc.). This presents an opportunity for SpeedTalk Mobile to directly compete by advertising against these terms and highlighting their unique selling points like the "$5 plan" and "no contract" model.</li>
+                    <li><strong>Niche Relevance:</strong> Keywords like "sim card for camera" indicate diverse applications for SIM cards. While SpeedTalk's primary focus is phones, understanding these niches can open avenues for broader market reach or strategic partnerships.</li>
+                    <li><strong>Data Relevance:</strong> The analysis confirms the importance of filtering out irrelevant data (like GPS trackers) to focus efforts on keywords truly aligned with the product offering.</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('keywordSearch');
+            const tableBody = document.getElementById('keywordTableBody');
+            const rows = tableBody.getElementsByTagName('tr');
+
+            searchInput.addEventListener('input', function() {
+                const filter = this.value.toLowerCase();
+                for (let i = 0; i < rows.length; i++) {
+                    let rowText = rows[i].textContent.toLowerCase();
+                    if (rowText.includes(filter)) {
+                        rows[i].style.display = ''; // Show row
+                    } else {
+                        rows[i].style.display = 'none'; // Hide row
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
