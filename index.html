@@ -46,25 +46,6 @@
         }
         header h1 { color: var(--secondary-color); font-size: 2.5em; margin: 0; }
         header p { color: #6B7280; font-size: 1.1em; margin-top: 5px; }
-        .print-button {
-            display: block;
-            width: 100%;
-            box-sizing: border-box;
-            text-align: center;
-            margin-top: 15px;
-            padding: 10px 15px;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: transform 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-        .print-button:hover {
-            transform: scale(1.03);
-        }
         .print-button .lucide {
             width: 18px;
             height: 18px;
@@ -86,10 +67,11 @@
             display: block;
             margin: 0 auto;
         }
-        .amazon-button {
+        .amazon-button, .print-button {
             display: block;
+            width: 100%;
+            box-sizing: border-box;
             text-align: center;
-            margin-top: 15px;
             padding: 10px 15px;
             background-color: var(--primary-color);
             color: white;
@@ -97,8 +79,18 @@
             border-radius: 5px;
             font-weight: bold;
             transition: transform 0.2s;
+            border: none;
+            cursor: pointer;
         }
-        .amazon-button:hover { transform: scale(1.03); }
+        .amazon-button {
+            margin-top: 15px;
+        }
+        .print-button {
+            margin-top: 10px;
+        }
+        .amazon-button:hover, .print-button:hover {
+            transform: scale(1.03);
+        }
         .executive-summary {
             background-color: var(--light-primary-bg);
             border-left: 5px solid var(--primary-color);
@@ -197,14 +189,14 @@
                     This analysis reveals a critical disconnect: while SpeedTalk Mobile's low-cost plans are well-positioned for growth, severe operational issues create a significant trust deficit that suppresses conversions. Sentiment analysis shows <strong>71.7% of customer reviews are negative</strong>, citing activation problems and billing concerns.
                 </p>
                 <p>
-                    Simultaneously, keyword and storefront analysis identifies major untapped growth opportunities. These include the <strong>"sim card for camera"</strong> market (2,100+ monthly searches) and the Spanish-speaking market (5,600+ searches). The strategy outlined below directly addresses the trust issues while providing a clear path to capture these new, high-intent customer segments and solidify market leadership.
+                    Simultaneously, keyword and storefront analysis identifies major untapped growth opportunities. These include the <strong>"sim card for camera"</strong> and <strong>"sim card for gps tracker"</strong> markets (2,100+ monthly searches combined) and the Spanish-speaking market (5,600+ searches). The strategy outlined below directly addresses the trust issues while providing a clear path to capture these new, high-intent customer segments and solidify market leadership.
                 </p>
             </div>
             <div class="product-showcase">
                 <img src="https://m.media-amazon.com/images/I/61RJKSLBB+L._AC_SL1500_.jpg" alt="SpeedTalk Mobile $5 Prepaid SIM Card Product Image">
                 <a href="https://a.co/d/776BcV1" target="_blank" class="amazon-button">View Live Amazon Listing</a>
                 <button class="print-button" onclick="window.print()">
-                    <i class="lucide" data-lucide="printer"></i>
+                    <i data-lucide="printer"></i>
                     <span>Print / Save as PDF</span>
                 </button>
             </div>
