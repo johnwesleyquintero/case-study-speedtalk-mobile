@@ -1,52 +1,44 @@
 # Strategic Analysis & Growth Plan: SpeedTalk Mobile
 
-  <!-- Optional: Create a cool banner image and upload it somewhere like imgur -->
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 
-**Live Case Study:** [**View the Live Executive Report**](https://your-netlify-link.netlify.app/) <!-- Replace with your live Netlify link -->
+This repository contains a single-page HTML strategic analysis and growth plan for the brand **SpeedTalk Mobile**. The report was prepared by John Wesley Quintero for VAXPH.
+
+The analysis focuses on an Amazon-centric strategy to resolve critical brand trust issues, capture untapped market segments (like "Connected Cameras" and the Spanish-speaking market), and optimize advertising spend.
+
+---
+
+### ▶️ How to View
+
+1.  Clone this repository to your local machine:
+    ```bash
+    git clone <your-repository-url>
+    ```
+2.  Navigate into the project directory and open the `index.html` file in any modern web browser (like Chrome, Firefox, or Edge).
 
 ---
 
-## 🚀 Overview
+### ✨ Features
 
-This repository contains a comprehensive strategic analysis of SpeedTalk Mobile, a provider of prepaid SIM cards. The goal of this case study was to perform a deep-dive audit of the brand's digital presence—spanning their website, Amazon store, and market positioning—to identify critical threats and uncover high-impact growth opportunities.
-
-This analysis was conducted as part of a final-round interview task for a digital marketing agency, demonstrating my ability to deliver actionable, data-driven insights even with limited resources.
-
-## 🎯 Key Objectives
-
-*   **Holistic Audit:** Analyze the brand from multiple perspectives: customer experience (UX), technical performance (SEO & Speed), and business strategy.
-*   **Threat Identification:** Uncover critical issues negatively impacting revenue, brand reputation, and marketing ROI.
-*   **Opportunity Discovery:** Identify untapped market segments and keyword gaps that competitors are overlooking.
-*   **Actionable Strategy:** Formulate a clear, 3-phase, 90-day plan to address all findings and drive measurable growth.
-
-## 🛠 Methodology & "Guerrilla" Tactics
-
-In the absence of premium enterprise tools, this analysis was performed using a combination of resourceful "guerrilla" research techniques:
-
-1.  **Technical Audit:** Utilized browser-based tools like Google Lighthouse to assess website performance, accessibility, and SEO health.
-2.  **Amazon SERP Analysis:** Manually analyzed Amazon search result pages to understand product positioning, ad strategy, and competitive landscape.
-3.  **Customer Sentiment Analysis:** Scraped and synthesized over 50 customer reviews to identify recurring pain points, product strengths, and the core customer persona.
-4.  **Keyword "Autocomplete" Mining:** Leveraged Amazon's search suggestions to find high-intent, long-tail keywords.
-5.  **Competitor & Reseller Investigation:** Used tools like Keepa (free tier) to diagnose Buy Box loss and investigate the impact of 3rd-party resellers on brand health.
-
-## 🔑 Summary of Findings & Core Recommendations
-
-The analysis revealed that while SpeedTalk Mobile has a strong product offering, its growth is significantly hampered by three core issues:
-
-1.  **Critical Brand Trust Deficit:** A recurring theme of "scam" and "stolen credit card" in reviews points to a severe trust issue that must be addressed immediately.
-2.  **Revenue Leakage & Brand Damage:** The brand consistently loses ~10% of the Buy Box to unauthorized resellers who provide a poor customer experience, directly harming brand reputation and wasting ad spend.
-3.  **Significant Missed Markets:** The analysis uncovered two massive, untapped markets:
-    *   **The "Connected Camera" Niche:** Over 2,100 monthly searches for `sim card for camera`.
-    *   **The Spanish-Speaking Market:** Over 5,600 monthly searches for `rastreador gps para carros`.
-
-The proposed solution is a **90-day strategic plan** focused on a "Trust Overhaul" of all marketing copy, implementing a proactive Brand Protection Protocol, and launching targeted campaigns to capture these new markets.
-
-## 👨‍💻 About the Author
-
-My name is John Wesley Quintero, and I am a passionate professional with a unique hybrid skillset spanning **E-commerce Strategy** and **Full-Stack Development**. I specialize in turning deep data analysis into tangible business results and building the tools necessary to execute on those insights.
-
-*   **Portfolio:** [your-portfolio-link.com](https://your-portfolio-link.com)
-*   **LinkedIn:** [linkedin.com/in/your-profile](https://linkedin.com/in/your-profile)
+*   **Brand-Aligned Design:** The color scheme (`#F97316` Orange) and overall aesthetic are tailored to reflect SpeedTalk Mobile's vibrant and energetic brand identity.
+*   **Professional Iconography:** Uses the [Lucide](https://lucide.dev/) icon library for clean, consistent, and scalable SVG icons, providing a more polished look than standard emojis.
+*   **Fully Responsive:** The layout is designed to be perfectly legible and functional on desktops, tablets, and mobile devices.
+*   **Print-Friendly:** Includes a dedicated print stylesheet (`@media print`) that reformats the content for a clean, professional-looking PDF or paper copy. Interactive elements like buttons are automatically hidden.
+*   **Data-Driven Insights:** Clearly presents key findings, threats, and opportunities derived from market and sentiment analysis.
+*   **Self-Contained:** The report is a single HTML file with inlined CSS, requiring no complex build steps or dependencies to view.
 
 ---
-*This case study was conducted independently and is based on publicly available information.*
+
+### 🛠️ Technology Stack
+
+*   **HTML5:** For the core structure and content.
+*   **CSS3:** For all styling, utilizing CSS Custom Properties (variables) for easy theme management.
+*   **Lucide Icons:** For SVG icons, loaded via a CDN.
+
+---
+
+### ✍️ Credits
+
+*   **Analysis & Content:** John Wesley Quintero
+*   **Client:** VAXPH
