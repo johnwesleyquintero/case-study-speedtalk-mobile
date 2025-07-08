@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storefront Performance Report - Q4 2023</title>
+    <style>
+        /* --- WesCodeAI Standard Palette --- */
+        :root {
+            --primary-color: #2c3e50; /* Dark Blue-Gray */
+            --secondary-color: #3498db; /* Bright Blue */
+            --accent-color: #e67e22; /* Orange */
+            --background-color: #ecf0f1; /* Light Gray */
+            --text-color: #34495e; /* Darker Gray */
+            --card-bg: #ffffff; /* White */
+            --border-color: #dcdcdc; /* Light Gray Border */
+            --header-text: #fdfdfd;
+            --table-header: #eeeeee;
+            --table-border: #cccccc;
+        }
+
+        /* --- Base Styles --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* --- Header --- */
+        header {
+            background-color: var(--primary-color);
+            color: var(--header-text);
+            padding: 2.5rem;
+            text-align: center;
+            border-bottom: 5px solid var(--secondary-color);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        /* --- Navigation / Table of Contents --- */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            background-color: var(--primary-color);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .nav-bar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            gap: 1.5rem;
+        }
+
+        .nav-bar a {
+            color: var(--header-text);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-bar a:hover, .nav-bar a:focus {
+            background-color: var(--secondary-color);
+            color: var(--card-bg);
+        }
+
+        /* --- Main Content --- */
+        main {
+            padding: 2rem 3rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--border-color);
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px; /* Adjust to sit on the border */
+            width: 80px; /* Short underline */
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        h3 {
+            color: var(--primary-color);
+            font-size: 1.6rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 25px;
+            margin-bottom: 1rem;
+        }
+
+        ol {
+            list-style-type: decimal;
+            padding-left: 25px;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Tables --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--table-border);
+        }
+
+        th {
+            background-color: var(--table-header);
+            color: var(--primary-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* --- Observations / Key Takeaways Styling --- */
+        .observations, .insights, .recommendations {
+            background-color: #f7f7f7;
+            border-left: 5px solid var(--accent-color);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-radius: 5px;
+        }
+
+        .observations h3, .insights h3, .recommendations h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .insights ul, .recommendations ul {
+            list-style-type: circle;
+            margin-left: 0;
+            padding-left: 20px;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem auto;
+                border-radius: 0;
+            }
+            header {
+                padding: 1.5rem;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+            header p {
+                font-size: 1rem;
+            }
+            .nav-bar ul {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0.5rem 0;
+            }
+            .nav-bar a {
+                padding: 0.5rem 1.5rem;
+                text-align: center;
+            }
+            main {
+                padding: 1.5rem;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+            th, td {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+            .observations, .insights, .recommendations {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+            }
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .nav-bar ul {
+                gap: 0.25rem;
+            }
+            .nav-bar a {
+                font-size: 0.9em;
+                padding: 0.4rem 0.8rem;
+            }
+            main {
+                padding: 1rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Storefront Performance Report</h1>
+            <p>Comprehensive Analysis of Key Metrics for Strategic Stakeholders</p>
+        </header>
+
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="#executive-summary">Executive Summary</a></li>
+                <li><a href="#sales-performance">Sales Performance</a></li>
+                <li><a href="#customer-feedback">Customer Feedback</a></li>
+                <li><a href="#pricing-structure">Pricing & Costs</a></li>
+                <li><a href="#key-insights">Strategic Insights</a></li>
+                <li><a href="#methodology">Methodology</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section id="executive-summary">
+                <h2>Executive Summary</h2>
+                <p>This report presents a high-level overview of the storefront's product performance, customer engagement, and cost structure based on the latest available data. The analysis identifies key trends and areas for strategic focus.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                            <th>Interpretation for Stakeholders</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Total Products Analyzed</strong></td>
+                            <td>35</td>
+                            <td>The dataset covers 35 unique product ASINs, offering a broad view of the storefront.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Average Current Sales Rank</strong></td>
+                            <td>136,878</td>
+                            <td>Indicates a generally moderate to high sales rank across the portfolio (lower number is better).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Units Sold (Past Month)</strong></td>
+                            <td>2,750</td>
+                            <td>Aggregate sales volume across all tracked products in the last 30 days.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Overall Customer Rating (Avg)</strong></td>
+                            <td>3.3 / 5</td>
+                            <td>Customer satisfaction is average, indicating opportunities for improvement in specific product lines.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Average Current Buy Box Price</strong></td>
+                            <td>$17.65</td>
+                            <td>The average selling price for products currently holding the Buy Box.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Average Amazon Fees (% of Price)</strong></td>
+                            <td>~30%</td>
+                            <td>A significant portion of the Buy Box price, on average, is allocated to Amazon's FBA and Referral fees.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Primary Product Categories</strong></td>
+                            <td>Cell Phones & Accessories (86%), Electronics (14%)</td>
+                            <td>Storefront heavily weighted towards mobile accessories, with minor electronics presence.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dominant Brand</strong></td>
+                            <td>SpeedTalk Mobile (91%)</td>
+                            <td>The storefront's product offering is highly concentrated under one brand.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="sales-performance">
+                <h2>Sales Performance Overview</h2>
+                <p>An in-depth look at products driving sales volume and those with strong sales rank performance.</p>
+
+                <h3>Top 5 Products by Current Sales Rank (Lower Rank = Better)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Title (Abbreviated)</th>
+                            <th>Current Sales Rank</th>
+                            <th>90-Day Avg. Rank</th>
+                            <th>Units Sold (Past Month)</th>
+                            <th>90-Day % Change</th>
+                            <th>Current Price</th>
+                            <th>Rating</th>
+                            <th>Review Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SpeedTalk Mobile $5 Prepaid Smart Watch SIM Card Kit...</td>
+                            <td>7,443</td>
+                            <td>6,962</td>
+                            <td>500</td>
+                            <td>-11%</td>
+                            <td>$5.00</td>
+                            <td>3.3</td>
+                            <td>11,900</td>
+                        </tr>
+                        <tr>
+                            <td>SpeedTalk Mobile Pre-Paid SIM Card Starter Kit...</td>
+                            <td>7,940</td>
+                            <td>9,298</td>
+                            <td>100</td>
+                            <td>+26%</td>
+                            <td>$0.95</td>
+                            <td>3.4</td>
+                            <td>5,196</td>
+                        </tr>
+                        <tr>
+                            <td>SpeedTalk Mobile Prepaid Cell Phone SIM Card... ($18 plan)</td>
+                            <td>7,939</td>
+                            <td>9,337</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>$19.00</td>
+                            <td>3.4</td>
+                            <td>5,195</td>
+                        </tr>
+                        <tr>
+                            <td>SpeedTalk Mobile Prepaid Cell Phone SIM Card... ($11 plan)</td>
+                            <td>7,946</td>
+                            <td>9,252</td>
+                            <td>50</td>
+                            <td>-2%</td>
+                            <td>$11.00</td>
+                            <td>3.4</td>
+                            <td>5,195</td>
+                        </tr>
+                        <tr>
+                            <td>SpeedTalk Mobile Prepaid SIM Card Kit... ($5 plan)</td>
+                            <td>8,002</td>
+                            <td>9,291</td>
+                            <td>50</td>
+                            <td>+44%</td>
+                            <td>$5.00</td>
+                            <td>3.4</td>
+                            <td>5,196</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="observations">
+                    <h3>Key Observations:</h3>
+                    <ul>
+                        <li><strong>Low-Cost Dominance:</strong> Top-ranking products are consistently low-cost SIM card kits ($0.95 - $19.00), indicating strong price-point sensitivity in this market segment.</li>
+                        <li><strong>Mixed Growth Trends:</strong> While the highest volume product shows a slight decline in monthly sales change (-11%), several other top performers exhibit significant positive growth (e.g., +26%, +44%), signaling increasing demand for specific offerings.</li>
+                    </ul>
+                </div>
+
+                <h3>Top 3 Products by Units Sold in Past Month</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Title (Abbreviated)</th>
+                            <th>Units Sold (Past Month)</th>
+                            <th>Current Sales Rank</th>
+                            <th>90-Day % Change</th>
+                            <th>Current Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SpeedTalk Mobile $5 Prepaid Smart Watch SIM Card Kit...</td>
+                            <td>500</td>
+                            <td>7,443</td>
+                            <td>-11%</td>
+                            <td>$5.00</td>
+                        </tr>
+                        <tr>
+                            <td>SpeedTalk Mobile GPS Tracker SIM Card Starter Kit...</td>
+                            <td>500</td>
+                            <td>4,438</td>
+                            <td>+31%</td>
+                            <td>$1.25</td>
+                        </tr>
+                        <tr>
+                            <td>SpeedTalk Mobile $5 Prepaid SIM Card for 5G 4G LTE GPS Trackers...</td>
+                            <td>300</td>
+                            <td>8,223</td>
+                            <td>+31%</td>
+                            <td>$5.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="observations">
+                    <h3>Key Observations:</h3>
+                    <ul>
+                        <li><strong>High-Volume Segments:</strong> Top-selling products are concentrated in Smart Watch and GPS Tracker SIM cards, both at competitive, low price points.</li>
+                        <li><strong>Strong Growth in Tracker SIMs:</strong> Two out of three top sellers, specifically GPS Tracker SIM cards, show robust positive growth in monthly sales (+31%), indicating a rapidly expanding market for these products.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="customer-feedback">
+                <h2>Customer Engagement Insights</h2>
+                <p>Analysis of customer review data provides insight into product satisfaction and areas for potential enhancement.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                            <th>Interpretation for Stakeholders</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Overall Average Rating</strong></td>
+                            <td>3.3 / 5 (across 32 rated products)</td>
+                            <td>Customer satisfaction is moderate; potential exists for improving product perception.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Highest Rated Product</strong></td>
+                            <td>5.0 for `Jolt Mobile $12.00-3GB Data Plan...`</td>
+                            <td>One product achieves a perfect rating, but note its minimal review volume suggests limited overall impact.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lowest Rated Product</strong></td>
+                            <td>1.0 for `SpeedTalk Mobile Sim Card USA Unlimited Talk and Text...`</td>
+                            <td>This product has a critical issue requiring immediate investigation and resolution.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Most Reviewed Product</strong></td>
+                            <td>`SpeedTalk Mobile $5 Prepaid Smart Watch SIM Card Kit...` (11,900 reviews)</td>
+                            <td>This high-volume product's 3.3 rating is significant and warrants focused attention.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="observations">
+                    <h3>Key Observations:</h3>
+                    <ul>
+                        <li><strong>Room for Improvement:</strong> The average rating of 3.3/5 suggests that while products generally meet expectations, there are opportunities to enhance the customer experience and drive higher satisfaction.</li>
+                        <li><strong>Critical Product Issue:</strong> The presence of a 1.0-rated product highlights a significant problem that could damage brand reputation and requires urgent remediation.</li>
+                        <li><strong>Impact of High-Volume Product:</strong> The highest-selling product's 3.3 rating from a large review base indicates that even small improvements to this product could have a substantial positive impact on overall customer sentiment.</li>
+                    </ul>
+                    <p><em>Note: The "Return Rate" column was entirely empty, preventing any analysis of product returns from this dataset.</em></p>
+                </div>
+            </section>
+
+            <section id="pricing-structure">
+                <h2>Pricing & Cost Structure Analysis</h2>
+                <p>Examination of average pricing and associated Amazon fulfillment and referral fees.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                            <th>Interpretation for Stakeholders</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Average Current Buy Box Price</strong></td>
+                            <td>$17.65</td>
+                            <td>Represents the typical selling price for products on the storefront.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Average 90-Day Buy Box Price</strong></td>
+                            <td>$17.61</td>
+                            <td>Indicates high price stability over the last three months.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Average FBA Pick&Pack Fee</strong></td>
+                            <td>$2.75</td>
+                            <td>Fixed fulfillment cost per unit for FBA products.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Average Referral Fee (%)</strong></td>
+                            <td>14.88%</td>
+                            <td>Typical category commission paid to Amazon per sale.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Average Referral Fee (USD)</strong></td>
+                            <td>$2.55</td>
+                            <td>The average dollar amount paid to Amazon per sale based on current prices.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="observations">
+                    <h3>Key Observations:</h3>
+                    <ul>
+                        <li><strong>Stable Pricing:</strong> Buy Box prices have remained remarkably consistent over the last 90 days.</li>
+                        <li><strong>Significant Amazon Cost Burden:</strong> On average, approximately $5.30 (or over 30%) of the average Buy Box price ($17.65) is consumed by combined Amazon fees (FBA Pick&Pack + Referral Fee). This necessitates thorough cost-of-goods-sold analysis to ensure healthy profit margins.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="key-insights">
+                <h2>Strategic Insights & Recommendations</h2>
+                <p>Synthesized findings from the analysis, providing actionable insights for business growth and optimization.</p>
+
+                <div class="insights">
+                    <h3>Key Strategic Insights:</h3>
+                    <ol>
+                        <li><strong>Dual Product Segment Focus:</strong> The storefront effectively targets two distinct SIM card segments:
+                            <ul>
+                                <li><strong>Smartwatch/Phone SIMs:</strong> High sales ranks and review counts, indicating a mature and competitive market.</li>
+                                <li><strong>GPS Tracker/IoT SIMs:</strong> Demonstrating strong growth in sales volume, suggesting an emerging and expanding market opportunity.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Price Point Optimization:</strong> Lower-priced SIM cards (around $5-$10) are the primary drivers of sales volume and better sales ranks. Higher-priced annual plans show significantly lower sales velocity and poor performance. This indicates a strong market preference for accessible, lower-cost solutions.</li>
+                        <li><strong>Customer Sentiment Variance:</strong> While overall satisfaction is moderate, there's a critical product underperforming (1.0 rating). Addressing specific product issues, especially for high-volume sellers with average ratings, presents a significant opportunity to uplift overall brand perception.</li>
+                        <li><strong>Dynamic Market Trends:</strong> Certain products exhibit strong positive growth (e.g., +26% to +44% in monthly sales), while even top sellers can experience declines. Continuous monitoring of these trends is crucial for timely strategic adjustments.</li>
+                        <li><strong>Margin Pressure from Fees:</strong> Amazon's fulfillment and referral fees represent a substantial portion of the selling price (over 30% on average). This emphasizes the critical need for meticulous cost-of-goods-sold (COGS) management and pricing strategies to maintain healthy profitability.</li>
+                    </ol>
+                </div>
+
+                <div class="recommendations">
+                    <h3>Potential Next Steps & Recommendations:</h3>
+                    <ul>
+                        <li><strong>Product Deep Dive (Low-Rated ASINs):</strong> Immediately investigate the 1.0-rated product to identify root causes of customer dissatisfaction and implement corrective actions.</li>
+                        <li><strong>Optimize High-Volume Products:</strong> Conduct a focused review of the highest-selling product (Smart Watch SIM Kit, 3.3 rating, -11% change) to understand the factors contributing to the decline and customer feedback, aiming for improved satisfaction and retention.</li>
+                        <li><strong>Capitalize on Growth Segments:</strong> Increase marketing and inventory for growing segments like GPS Tracker SIM cards to fully leverage increasing market demand.</li>
+                        <li><strong>Pricing Strategy Re-evaluation:</strong> Assess the viability and positioning of higher-priced plans given their poor sales performance. Consider adjusting pricing, bundling, or re-marketing strategies.</li>
+                        <li><strong>Profitability Analysis:</strong> Conduct a comprehensive profitability analysis for each ASIN by integrating COGS data to identify truly profitable products and potentially prune underperforming, low-margin offerings.</li>
+                        <li><strong>Competitor Benchmarking:</strong> Analyze direct competitors' pricing, features, and review profiles to identify opportunities for competitive advantage.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="methodology">
+                <h2>Data Context & Methodology</h2>
+                <p>This section outlines the data scope and pre-processing steps undertaken for this analysis.</p>
+                <p>The provided dataset comprises detailed storefront metrics for 35 unique product ASINs. Our analysis was conducted under the following key assumptions:</p>
+                <ul>
+                    <li><strong>Sales Rank:</strong> Lower numerical values denote superior (higher) sales performance.</li>
+                    <li><strong>Monetary Values:</strong> Fields prefixed with '$' (e.g., 'Buy Box 🚚: Current') represent USD currency.</li>
+                    <li><strong>Percentages:</strong> Columns ending with '%' (e.g., 'Referral Fee %') represent percentage values.</li>
+                    <li><strong>Missing Data:</strong> Empty or '-' values in numerical fields were treated as missing, handled by exclusion from calculations, or imputed as zero where logically appropriate (e.g., 0 units bought).</li>
+                    <li><strong>Data Freshness:</strong> The data reflects a snapshot of current and recent (90-day average) storefront performance.</li>
+                </ul>
+
+                <h3>Data Cleaning & Pre-processing Summary:</h3>
+                <p>The dataset underwent rigorous cleaning and pre-processing to ensure data integrity and analytical readiness:</p>
+                <ul>
+                    <li>**Numerical Conversion:** Key performance indicators such as Sales Ranks, Bought in past month, Review Counts, and all monetary/percentage values were meticulously converted to their appropriate numerical types (integers or floats). Missing values were retained as `NaN` for accurate averaging, or imputed as `0` where they logically represented an absence of quantity (e.g., no units bought).</li>
+                    <li>**Percentage Handling:** Percentage strings (e.g., "-11 %") were converted to decimal floats (e.g., -0.11) for correct mathematical operations.</li>
+                    <li>**Categorization:** Root and Sub Categories were extracted to facilitate high-level product grouping and brand analysis.</li>
+                    <li>**Return Rate:** This column was entirely empty across the dataset and thus excluded from analysis.</li>
+                </ul>
+                <p>The data is now prepared and validated, ready to support robust business decisions.</p>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
