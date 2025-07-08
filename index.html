@@ -102,8 +102,7 @@
         }
         h3 { color: var(--secondary-color); font-size: 1.4em; }
         ul { list-style-type: none; padding-left: 0; }
-
-        /* --- List Styles (Refactored for Lucide Icons) --- */
+         /* --- List Styles (Refactored for Lucide Icons) --- */
         li {
             display: flex;
             align-items: flex-start; /* Align icon to the top of the text */
@@ -124,11 +123,20 @@
         .opportunity li .lucide {
             color: var(--opportunity-color);
         }
-
-        .review-quote { border-left: 3px solid #FCA5A5; padding-left: 15px; font-style: italic; color: #4B5563; margin: 15px 0; }
+         .review-quote { border-left: 3px solid #FCA5A5; padding-left: 15px; font-style: italic; color: #4B5563; margin: 15px 0; }
         details { margin-top: 15px; border: 1px solid var(--border-color); border-radius: 5px; padding: 10px; }
         summary { cursor: pointer; font-weight: bold; color: var(--primary-color); }
         footer { text-align: center; margin-top: 50px; color: #9CA3AF; font-size: 0.9em; }
+        footer p { margin-bottom: 5px; } /* Adjust spacing for multiple lines in footer */
+        .footer-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        .footer-link:hover {
+            color: var(--secondary-color);
+        }
         .tag {
             display: inline-block; background-color: var(--light-primary-bg);
             color: var(--light-primary-text);
@@ -228,6 +236,7 @@
 
         <footer>
             <p>This analysis demonstrates that with a targeted, data-driven approach, we can rapidly solve critical issues and unlock significant growth. I am confident in my ability to execute this plan and deliver measurable results.</p>
+            <p>Explore more of my work: <a href="https://wescode.vercel.app/" target="_blank" class="footer-link">John Wesley Quintero's Professional Portfolio</a></p>
         </footer>
     </div>
     <script>
